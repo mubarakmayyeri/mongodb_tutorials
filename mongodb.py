@@ -32,9 +32,29 @@ def insert_document(document):
     collection.insert_one(document)
     print("Document inserted succesfully")
 
-doc = {
-    "Name": "Mubarak M",
-    "Role": "Python Dev"
-}
+# doc = {
+#     "Name": "Mubarak M",
+#     "Role": "Python Dev"
+# }
 
-insert_document(doc)
+# insert_document(doc)
+
+db = client.school
+collection = db.students
+
+first_names = ["Alice", "Bob", "Charlie", "Diana", "Ella"]
+last_names = ["Smith", "Johnson", "Williams", "Brown", "Jones"]
+ages = [18, 23, 20, 19, 22]
+
+docs = []
+
+for f_name, l_name, age in zip(first_names, last_names, ages):
+    doc = {"first_name": f_name, "last_name":l_name, "age": age}
+    docs.append(doc)
+
+
+def insert_document(documents, collection):
+    collection.insert_many(documents)
+    print("Documents inserted succesfully")
+
+insert_document(docs, collection)
