@@ -40,7 +40,7 @@ def insert_document(document):
 # insert_document(doc)
 
 db = client.school
-studnet_collection = db.students
+student_collection = db.students
 
 # first_names = ["Alice", "Bob", "Charlie", "Diana", "Ella"]
 # last_names = ["Smith", "Johnson", "Williams", "Brown", "Jones"]
@@ -72,10 +72,10 @@ def get_diana(collection):
     diana = collection.find_one({"first_name": "Diana"})
     printer.pprint(diana)
 
-# get_diana(studnet_collection)
+# get_diana(student_collection)
 
 def find_count():
-    count = studnet_collection.count_documents(filter={})
+    count = student_collection.count_documents(filter={})
     return count
 
 # print("Number of students: ", find_count())
@@ -86,7 +86,7 @@ def student_by_id(student_id):
 
     _id = ObjectId(student_id)
 
-    student = studnet_collection.find_one({"_id": _id})
+    student = student_collection.find_one({"_id": _id})
     printer.pprint(student)
 
 
@@ -99,7 +99,7 @@ def get_age_range(min_age, max_age):
             {'age':{'$lte': max_age}}
     ]}
 
-    students = studnet_collection.find(query).sort("age")
+    students = student_collection.find(query).sort("age")
 
     for st in students:
         printer.pprint(st)
@@ -109,9 +109,40 @@ def get_age_range(min_age, max_age):
 def project_columns():
     columns = {'_id': 0, 'first_name': 1, "age": 1}
 
-    students = studnet_collection.find({}, columns)
+    students = student_collection.find({}, columns)
 
     for st in students:
         printer.pprint(st)
 
 # project_columns()
+
+def update_student_by_id(st_id):
+    from bson.objectid import ObjectId
+
+    st_id = ObjectId(st_id)
+
+    # updates = {
+    #     "$set": {"New_field": True, "Old_filed": False, "last_name": "Geller"},
+    #     "$inc": {"age": 1},
+    #     "$rename": {'first_name': "f_name"}
+    # }
+
+    # student_collection.update_one({"_id": st_id}, updates)
+
+    student_collection.update_one({"_id": st_id}, {"$unset": {"New_field": "", "Old_filed": ""}, "$rename": {"f_name": "first_name"}})
+
+# update_student_by_id("64d09c52b85fcd3cd2d5c41f")
+
+def replace_object(st_id):
+    from bson.objectid import ObjectId
+    st_id = ObjectId(st_id)
+
+    new_doc = {
+        "first_name": "Jhon",
+        "last_name": "Doe",
+        "age": 40
+    }
+
+    student_collection.replace_one({"_id": st_id}, new_doc)
+
+replace_object("64d09c52b85fcd3cd2d5c41f")
