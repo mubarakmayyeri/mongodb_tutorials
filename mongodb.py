@@ -145,4 +145,12 @@ def replace_object(st_id):
 
     student_collection.replace_one({"_id": st_id}, new_doc)
 
-replace_object("64d09c52b85fcd3cd2d5c41f")
+# replace_object("64d09c52b85fcd3cd2d5c41f")
+
+def delete_by_id(st_id):
+    from bson.objectid import ObjectId
+    st_id = ObjectId(st_id)
+
+    student_collection.delete_one({"_id": st_id})
+
+delete_by_id("64d09c52b85fcd3cd2d5c41f")
