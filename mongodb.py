@@ -19,8 +19,22 @@ client = MongoClient(uri)
 #     print(e)
 
 
-dbs = client.list_database_names()
-print("Databases: ", dbs)
-test_db = client.test_db
-collections = test_db.list_collection_names()
-print("Collections in test_db:", collections)
+# dbs = client.list_database_names()
+# print("Databases: ", dbs)
+# test_db = client.test_db
+# collections = test_db.list_collection_names()
+# print("Collections in test_db:", collections)
+
+
+
+def insert_document(document):
+    collection = client.test_db.test_collection
+    collection.insert_one(document)
+    print("Document inserted succesfully")
+
+doc = {
+    "Name": "Mubarak M",
+    "Role": "Python Dev"
+}
+
+insert_document(doc)
