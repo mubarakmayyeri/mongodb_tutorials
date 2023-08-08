@@ -13,6 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Grant permission
+        run: chmod +x decrypt_secret.sh
+
       - name: Decrypt large secret
         run: ./decrypt_secret.sh
         env:
