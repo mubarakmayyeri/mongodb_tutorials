@@ -1,0 +1,28 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+steps:
+      - name: Set up Python
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' 
+
+      - name: Install dependencies
+        run:
+          pip install -r requirements.txt
+
+      - name: Print Hello World
+        run:
+          python -c "print('Hello, World!')"
