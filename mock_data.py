@@ -1,3 +1,4 @@
+import pymongo
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
 import json
@@ -19,3 +20,17 @@ client = MongoClient(uri)
 db = client.mock_db
 collection = db.employees
 # collection.insert_many(file_data)
+
+# index_keys = [("country", pymongo.ASCENDING), ("job_title", pymongo.ASCENDING)]
+# collection.create_index(index_keys, name="country_job_title_index")
+
+# query = {"country": "Poland", "job_title": "Structural Analysis Engineer"}
+# result = collection.find(query).explain()
+
+# Print the execution statistics
+# print(result["executionStats"])
+
+indexes = collection.list_indexes()
+
+for idx in indexes:
+    print(idx['name'])
